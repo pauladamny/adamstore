@@ -1,0 +1,69 @@
+﻿@model AdamStore.Models.CounriesStatesViewModel
+@{
+    ViewBag.Title = "CountryStateView";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+@if (ViewBag.CountryList != null)
+{
+    @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, "-- Select Country--", new { @class = "form-control", @id = "CountryId" })
+
+}
+@Html.DropDownListFor(m => m.StateId, new SelectList(""), "--Select State--", new { @class = "form-control" })
+
+
+@*@Html.DropDownListFor(s=>s.CountryId,ViewBag.CountryList as SelectList,
+        "-- Select Country --", new { @class="form-control"})
+
+    @Html.DropDownListFor(s=>s.StateId,new SelectList(""),  new { @class="form-control"})*@
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#CountryId").change(function () {
+
+            var countryId = $(this).val();
+            debugger
+            $.ajax({
+
+                type: "Post",
+                url: "/Home/GetStates?CountryId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#StateId").empty();
+                    $("#StateId").append(response);
+
+                }
+
+            })
+
+        })
+
+    })
+
+</script>
+@*$(document).ready(function () {
+            $("#CountryId").change(function () {
+                debugger
+                var countryid = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    contentType:"html",
+                    url: "/Home/GetStates?CountryId=" + countryid,
+                    success: function (response) {
+                        $("#StateId").empty();
+                        $("#StateId").append(response);
+                    }
+                })
+            })
+
+        })
+
+    </script>*@

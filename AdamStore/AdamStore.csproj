@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -176,12 +184,59 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RepositoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastracture\AutomapperWebProfile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CounriesStatesViewModel.cs" />
+    <Compile Include="Models\Country.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentViewModel.cs" />
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeViewModel.cs" />
+    <Compile Include="Models\EntityModel.Context.cs">
+      <DependentUpon>EntityModel.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\EntityModel.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\EntityModel.Designer.cs">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImageStore.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Site.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteUser.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRole.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -194,6 +249,19 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\EntityModel.Context.tt">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EntityModel.edmx.diagram">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\EntityModel.tt">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -241,6 +309,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\CountryStateView.cshtml" />
+    <Content Include="Views\Shared\PartialViewStates.cshtml" />
+    <Content Include="Views\Repository\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -257,6 +328,25 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdamStore.Business\AdamStore.Business.csproj">
+      <Project>{b901afb8-3c43-430d-9a3d-7b76692e863c}</Project>
+      <Name>AdamStore.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdamStore.Domain\AdamStore.Domain.csproj">
+      <Project>{9448d552-2b36-433d-87fa-042ce985cabb}</Project>
+      <Name>AdamStore.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\EntityModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

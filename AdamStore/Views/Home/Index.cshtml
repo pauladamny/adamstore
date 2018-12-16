@@ -1,31 +1,145 @@
-﻿@{
+﻿@model AdamStore.Models.EmployeeViewModel
+@{
     ViewBag.Title = "Home Page";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<style>
+    .error {
+        color: red;
+    }
+</style>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+
+@*<form id="frmEmp">*@
+
+
+    <div>
+        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList,
+     "--select--", new { @class = "form-control" })
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "full name" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error" })
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <input type="submit" value="Submit" class="btn btn-block btn-primary" id="btnSubmit"/>
+    @*<input class="btn btn-default" value="Submit" id="btnSubmitx" type="reset" />*@
+@*</form>*@
+}
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnSubmit").click(function () {
+                var frmData = $("#frmEmp").serialize();
+                if (!$("#frmEmp").valid()) {
+
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Index",
+                    data: frmData,
+                    success: function (response) {
+                        alert("saved")
+                    }
+
+                })
+            })
+
+        })
+
+
+
+
+    </script>
+
+
+    <div>
+        <label for="salutation">Select a title</label>
+        <select name="salutation" id="salutation">
+            <option disabled selected>Please pick one</option>
+            <option>Mr.</option>
+            <option>Mrs.</option>
+            <option>Dr.</option>
+            <option>Prof.</option>
+            <option>Other</option>
+        </select>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    @*@if (Model!=null)
+        {
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Name:<b>employee info</b>
+            </li>
+            <li class="list-group-item">
+                Name:<b>@Model.Name</b>
+            </li>
+            <li class="list-group-item">
+                Address:<b>@Model.Address</b>
+            </li>
+
+        </ul>
+        }*@
+
+
+    <div class="jumbotron">
+        <h1>ASP.NET STUFF</h1>
+
+
+        @*RAZOR SYNTAX*@
+        @{
+            int x = 5;
+        }
+        @for (int num = 0; num < 3; num++)
+        {
+            <b>@num</b>
+            <h3>@x</h3>
+        }
+
+        @*HTML HELPER*@
+        @Html.ActionLink("clickme", "About")
+
+
+
+
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdamStore.Infrastracture;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,12 @@ namespace AdamStore
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AutomapperWebProfile.Run();
+
+            System.Web.Optimization.BundleTable.EnableOptimizations = true;
+
+
         }
     }
 }
