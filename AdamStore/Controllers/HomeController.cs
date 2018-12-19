@@ -9,7 +9,22 @@ namespace AdamStore.Controllers
 {
     public class HomeController : Controller
     {
-       
+
+        public PartialViewResult All()
+        {
+            return PartialView("_Employee",JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+
 
 
 
@@ -46,12 +61,6 @@ namespace AdamStore.Controllers
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
 
         public ActionResult CountryStateView()
         {

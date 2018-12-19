@@ -4,6 +4,14 @@
 }
 
 <h2>@ViewBag.EmpName</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+@*@Html.Partial("_LoginPartial")*@
+@{
+
+    Html.RenderPartial("_LoginPartial");
+}
 
 
 <table class="table table-striped table-hover">
@@ -18,11 +26,11 @@
     <tbody>
         @foreach (var emp in ViewBag.AllEmps)
         {
-        <tr>
-            <td>@emp.Name</td>
-            <td>@emp.Address</td>
-            <td>@emp.DepartmentName</td>
-        </tr>
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.Address</td>
+                <td>@emp.DepartmentName</td>
+            </tr>
         }
     </tbody>
 </table>
