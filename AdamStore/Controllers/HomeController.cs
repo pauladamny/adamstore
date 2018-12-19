@@ -31,6 +31,8 @@ namespace AdamStore.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeViewModel model)
         {
+
+
           
 
                 var db = new AdamStoreEntities();
